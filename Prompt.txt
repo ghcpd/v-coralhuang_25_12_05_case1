@@ -1,0 +1,81 @@
+I want you to propose me a solution for a new feature. lets keep it simple as we can.
+Info: I have nest js, I like vertical slicing,I have valkey with cache manager nest.
+
+Requirements: In general I want to create a webhook api that is called heartbeat.
+This will be responsible for coordinating and assigning campaigns to some pool agents.
+The app has users and campaigns of users. Users will be assigned with some percentage that reflects to the amount of the available resources assigned to them.
+eg the user will have 50% of the available resources.
+Also a user will be able to assign percentage to the campaigns also.
+eg campaign-1 has 100% of the available resources.
+
+We have another app that im not responsible of that handles whats called pool agents and makes requests to the heartbeat to inform it.
+
+So the agents require a sessionId from the heartbeat. I have implemented this part.
+Then they make requests with this body:
+
+Body:
+
+```
+{
+    "pool_id": "pool-8f41c2b",
+    "pool_executors": 32,
+    "executors_discovery_in_progress": true,
+    "executors_metrics": []
+}
+```
+
+And i store this info in cache.
+
+Then the heartbeat must return a body like this:
+
+```
+{
+    "result": {
+        "session_id": "psess-9c2b2b",
+        "heartbeat_seconds": 5,
+        "allocation": [
+            { "campaign_id":"cmp-101", "target_executors": 8,  "campaign_settings_version": "b3f1..." },
+            { "campaign_id":"cmp-102", "target_executors": 24, "campaign_settings_version": "d726..." }
+        ]
+    }
+}
+```
+
+So heartbeat must evaluate depending on the campaign how much executors in a pool agent should target.
+fyi pool agents might be a lot like 10-20.
+We should avoid campaign fragmentation and try to keep a campaign on a single pool agent as much as we can, but is not obligated.
+
+The a pool agent returns this on next heartbeat:
+
+Body:
+
+```
+{
+    "pool_id": "pool-8f41c2b",
+    "pool_executors": 32,
+    "executors_discovery_in_progress": false,
+    "executors_metrics": [
+        {
+            "executor_id": "fzr-9f2a3e14",
+            "state": "RUNNING",
+            "campaign_id": "cmp-101",
+            "total_executions": 1200,
+            "executions_per_minute": 210
+        },
+        {
+            "executor_id": "fzr-9f2a3e15",
+            "state": "RUNNING",
+            "campaign_id": "cmp-101",
+            "total_executions": 100,
+            "executions_per_minute": 20
+        }
+        ...
+    ]
+}
+```
+
+This metrics will be saved in cache when a campaign is running.
+When a campaign is stopped, metrics should be gone.
+
+Recap is I only care about heartbeat implementation and design.
+Keep in mind that the heartbeat also handles the heartbeat_seconds so if a campaign hasn't changed in a while we should bump it up, to avoid unnesecery calls.
