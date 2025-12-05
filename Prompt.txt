@@ -1,81 +1,39 @@
-I want you to propose me a solution for a new feature. lets keep it simple as we can.
-Info: I have nest js, I like vertical slicing,I have valkey with cache manager nest.
+**(a)**
+Write a Python program that accepts a student’s WASSCE result and compares it with the cut-off aggregates of the student’s first, second, and third school choices. The program should determine whether the student qualifies for their first, second, or third choice, or not at all. If the student does not qualify for any of the three, it should suggest other schools or programmes that match the student’s aggregate. **(40 marks)**
 
-Requirements: In general I want to create a webhook api that is called heartbeat.
-This will be responsible for coordinating and assigning campaigns to some pool agents.
-The app has users and campaigns of users. Users will be assigned with some percentage that reflects to the amount of the available resources assigned to them.
-eg the user will have 50% of the available resources.
-Also a user will be able to assign percentage to the campaigns also.
-eg campaign-1 has 100% of the available resources.
+---
 
-We have another app that im not responsible of that handles whats called pool agents and makes requests to the heartbeat to inform it.
+**(b)**
+To make your program real, modify your code in (a) to load a prepared data with the Pandas package, run the program with it, and output the result in an excel sheet **(30 marks)**. For this reason, you are required to create three excel sheets:
 
-So the agents require a sessionId from the heartbeat. I have implemented this part.
-Then they make requests with this body:
+1. An excel sheet with fictitious names and WASSCE scores. **(5 marks)**
+2. An excel sheet/database with the applicant’s first, second and third choices. **(5 marks)**
+3. An excel sheet with university programs and their cutoff points. **(5 marks)**
 
-Body:
+---
 
-```
-{
-    "pool_id": "pool-8f41c2b",
-    "pool_executors": 32,
-    "executors_discovery_in_progress": true,
-    "executors_metrics": []
-}
-```
+**(c)**
+Create additional columns in the first excel sheet through your program to be used to indicate if an applicant will get her first, second or third choice after running the program. Let the program output ‘Yes’ for the choice she gets, and ‘No’ otherwise. **(10 marks).**
 
-And i store this info in cache.
+---
 
-Then the heartbeat must return a body like this:
+**(d)**
+Also create an additional column to output a suggested programme the applicant qualifies with the grade she has. **(5 marks)**
 
-```
-{
-    "result": {
-        "session_id": "psess-9c2b2b",
-        "heartbeat_seconds": 5,
-        "allocation": [
-            { "campaign_id":"cmp-101", "target_executors": 8,  "campaign_settings_version": "b3f1..." },
-            { "campaign_id":"cmp-102", "target_executors": 24, "campaign_settings_version": "d726..." }
-        ]
-    }
-}
-```
+---
 
-So heartbeat must evaluate depending on the campaign how much executors in a pool agent should target.
-fyi pool agents might be a lot like 10-20.
-We should avoid campaign fragmentation and try to keep a campaign on a single pool agent as much as we can, but is not obligated.
+**(e)**
+Add any ‘beautification’ you want to make your program more real and fit for use by an institution such as University of Ghana.
 
-The a pool agent returns this on next heartbeat:
+---
 
-Body:
+**Note:**
 
-```
-{
-    "pool_id": "pool-8f41c2b",
-    "pool_executors": 32,
-    "executors_discovery_in_progress": false,
-    "executors_metrics": [
-        {
-            "executor_id": "fzr-9f2a3e14",
-            "state": "RUNNING",
-            "campaign_id": "cmp-101",
-            "total_executions": 1200,
-            "executions_per_minute": 210
-        },
-        {
-            "executor_id": "fzr-9f2a3e15",
-            "state": "RUNNING",
-            "campaign_id": "cmp-101",
-            "total_executions": 100,
-            "executions_per_minute": 20
-        }
-        ...
-    ]
-}
-```
+1. You are free to be as innovative as you can.
+2. There will be bonus for those who can take it up further to include a suggestion for fee paying for those who may qualify.
+3. Copying and the use of AI is prohibited.
 
-This metrics will be saved in cache when a campaign is running.
-When a campaign is stopped, metrics should be gone.
+---
 
-Recap is I only care about heartbeat implementation and design.
-Keep in mind that the heartbeat also handles the heartbeat_seconds so if a campaign hasn't changed in a while we should bump it up, to avoid unnesecery calls.
+**Note:**
+The students' data should be 50 or more. Also, the codes should be written in Jupyter Notebook. Students' ID should take the form **UG20250000**. Use **if else elif** statement in your codes.
