@@ -1,0 +1,301 @@
+User: **(a)**
+Write a Python program that accepts a student’s WASSCE result and compares it with the cut-off aggregates of the student’s first, second, and third school choices. The program should determine whether the student qualifies for their first, second, or third choice, or not at all. If the student does not qualify for any of the three, it should suggest other schools or programmes that match the student’s aggregate. **(40 marks)**
+
+---
+
+**(b)**
+To make your program real, modify your code in (a) to load a prepared data with the Pandas package, run the program with it, and output the result in an excel sheet **(30 marks)**. For this reason, you are required to create three excel sheets:
+
+1. An excel sheet with fictitious names and WASSCE scores. **(5 marks)**
+2. An excel sheet/database with the applicant’s first, second and third choices. **(5 marks)**
+3. An excel sheet with university programs and their cutoff points. **(5 marks)**
+
+---
+
+**(c)**
+Create additional columns in the first excel sheet through your program to be used to indicate if an applicant will get her first, second or third choice after running the program. Let the program output ‘Yes’ for the choice she gets, and ‘No’ otherwise. **(10 marks).**
+
+---
+
+**(d)**
+Also create an additional column to output a suggested programme the applicant qualifies with the grade she has. **(5 marks)**
+
+---
+
+**(e)**
+Add any ‘beautification’ you want to make your program more real and fit for use by an institution such as University of Ghana.
+
+---
+
+**Note:**
+
+1. You are free to be as innovative as you can.
+2. There will be bonus for those who can take it up further to include a suggestion for fee paying for those who may qualify.
+3. Copying and the use of AI is prohibited.
+
+---
+
+**Note:**
+The students' data should be 50 or more. Also, the codes should be written in Jupyter Notebook. Students' ID should take the form **UG20250000**. Use **if else elif** statement in your codes.
+
+
+GitHub Copilot: Next action: I'll create an initial Jupyter Notebook skeleton with core functions, data generation, and tests so we can run early trials.
+
+Using "Create New Jupyter Notebook"
+
+Finding: Notebook skeleton created. Next step: add a small admissions module and initial pytest cases to run early tests.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions.py)
+
+Next action: configure the Python environment so tests run in the correct interpreter.
+
+Configuring a Python Environment
+Completed with input: {
+  "resourcePath": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1"
+}
+
+Using "Select a Python Environment"
+Completed with input: {
+  "resourcePath": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1"
+}
+
+Finding: Python env configured. Next step: create pytest file with unit tests covering edge cases (exact cutoff, invalid ID, missing scores).
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/test_admissions.py)
+
+Now running the pytest suite to see baseline test status.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest -q
+
+Next: install required packages (pytest, pandas, openpyxl, xlsxwriter, numpy, matplotlib, seaborn) into the venv.
+
+Installing packages XlsxWriter, ipywidgets, matplotlib, numpy, openpyxl, pandas, pytest, seaborn in .venv (3.14.0)
+Completed with input: {
+  "packageList": [
+    "pytest",
+    "pandas",
+    "openpyxl",
+    "XlsxWriter",
+    "numpy",
+    "matplotlib",
+    "seaborn",
+    "ipywidgets"
+  ],
+  "resourcePath": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1"
+}
+
+Attempting to install packages via pip in terminal now.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pip install pytest pandas openpyxl XlsxWriter numpy matplotlib seaborn ipywidgets
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pip install pytest pandas openpyxl XlsxWriter numpy matplotlib seaborn ipywidgets
+
+Now re-running pytest to confirm all initial unit tests pass.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest -q
+
+Next action: add a data generator script that creates 3 Excel sheets (students, choices, programs) and unit tests to validate file and sheet creation.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/generate_data.py)
+
+Now I'll add tests to validate the generated Excel file, sheet names, row counts, and StudentID format.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/test_data_generation.py)
+
+Running pytest to validate data generation tests.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest test_data_generation.py -q
+
+Finding: Existing qualify and suggestion logic use reversed comparisons (assumed lower-is-better). Next: flip comparisons to 'aggregate >= cutoff' and update docstrings accordingly.
+
+Using "Multi-Replace String in Files"
+
+
+```
+
+```
+Next: update unit test expectations for suggestion logic to match corrected comparison (cutoff <= aggregate).
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest -q
+
+Next: update qualifying tests to use descending cutoffs [50,40,30] so comparisons align with higher-is-better semantics.
+
+Using "Replace String in File"
+
+Now I'll read the test file to locate exact strings before applying the replacement.
+
+Read [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/test_admissions.py)
+
+Now I'll update the three assertions to use descending cutoffs.
+
+Using "Multi-Replace String in Files"
+
+
+```
+
+```
+
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest -q
+
+Next step: implement processing module to load the Excel, run validation, compute qualification columns, and suggest programs—including fee-paying suggestion. I'll add tests for this module.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/process_admissions.py)
+
+I'll add unit tests for the processing pipeline: load generated file, run validate/attach, and assert resulting columns and expected properties.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/test_process_admissions.py)
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest -q
+
+Next: make suggest_programs robust to dict key casing ('cutoff' or 'Cutoff') and handle missing values gracefully.
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest test_process_admissions.py -q
+
+I'll update the SuggestedProgram selection to handle key names ('Program' or 'name') and pick the best matching program robustly.
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Continue to iterate?
+[object Object]
+
+Made changes.
+
+User: @agent Continue: "Continue to iterate?"
+
+GitHub Copilot: Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest test_process_admissions.py -q
+
+Next: inspect the newly created notebook to determine cells for insertion and to plan content to meet the full outline.
+
+Retrieving Notebook summary.
+
+Next action: create the empty notebook file so I can populate it with the full notebook content.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Next: Adding the notebook cells from bottom to top; I'll insert cells (visualizations, tests, interactive checker, export, processing steps, data generation, and top-level docs) so final ordering matches the outline.
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Edit [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/admissions_notebook.ipynb)
+
+Now running the entire pytest suite to confirm all tests still pass after adding files and notebook.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest -q
+
+Next: generate the admissions_data.xlsx in the workspace so notebook cells can run end-to-end.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -c "from generate_data import write_all; print(write_all())"
+
+Now running the processing script to produce admissions_result.xlsx (final output).
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe process_admissions.py
+
+Quick verification: display the top rows of the final sheet to confirm added columns and suggestions.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe - <<'PY'
+import pandas as pd
+f='admissions_result.xlsx'
+df=pd.read_excel(f,sheet_name='final')
+print(df.columns.tolist())
+print(df[['StudentID','AssignedChoice','FirstChoice','SecondChoice','ThirdChoice','SuggestedProgram']].head())
+PY
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -c "import pandas as pd; df=pd.read_excel('admissions_result.xlsx',sheet_name='final'); print(df.columns.tolist()); print(df[['StudentID','AssignedChoice','FirstChoice','SecondChoice','ThirdChoice','SuggestedProgram']].head().to_string(index=False))"
+
+Next: create a small script to print a preview of the final Excel sheet and run it to confirm columns.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/preview_final.py)
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe preview_final.py
+
+Ran terminal command: exit()
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe preview_final.py
+
+Next: I'll add simple Excel beautification — header bold and color 'Yes' cells green — by editing export_final. I'll read the file to locate the function precisely.
+
+Read [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/process_admissions.py)
+
+I'll update export_final to apply simple styling: bold headers, freeze panes, and color 'Yes' cells green.
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe process_admissions.py
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pytest -q
+
+Finding: I created the notebook, data generator, processing module, and tests — and implemented the qualification/suggestion logic with beautified Excel export. Next steps: open and run the notebook top-to-bottom or run the scripts and tests described below.
+
+What I produced (workspace: c:\Bug_Bash\25_12_05\v-coralhuang_25_12_05_case1)
+- Jupyter notebook: admissions_notebook.ipynb
+- Core modules/scripts: admissions.py, generate_data.py, process_admissions.py, preview_final.py
+- Tests: test_admissions.py, test_data_generation.py, test_process_admissions.py
+- Generated output files: admissions_data.xlsx, admissions_result.xlsx
+- Status: All tests passing — 11 passed.
+
+How to run
+- From terminal (configured venv): python -m pytest  (runs all tests)
+- Generate data: python -c "from generate_data import write_all; write_all()"
+- Process and export final list: python process_admissions.py  (writes admissions_result.xlsx)
+- Or open admissions_notebook.ipynb in Jupyter/VS Code and run cells top-to-bottom for full interactive flow.
+
+If you want, I can now:
+- Add more edge-case tests (invalid/missing choices), or
+- Improve the dashboard visuals or fee-paying recommendation logic.
+
+GitHub Copilot (model: vsc-5mini-mix22-arm2-s300)
+
+Made changes.
