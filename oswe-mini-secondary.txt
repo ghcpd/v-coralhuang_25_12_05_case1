@@ -1,0 +1,246 @@
+820234338: **(a)**
+Write a Python program that accepts a student’s WASSCE result and compares it with the cut-off aggregates of the student’s first, second, and third school choices. The program should determine whether the student qualifies for their first, second, or third choice, or not at all. If the student does not qualify for any of the three, it should suggest other schools or programmes that match the student’s aggregate. **(40 marks)**
+
+---
+
+**(b)**
+To make your program real, modify your code in (a) to load a prepared data with the Pandas package, run the program with it, and output the result in an excel sheet **(30 marks)**. For this reason, you are required to create three excel sheets:
+
+1. An excel sheet with fictitious names and WASSCE scores. **(5 marks)**
+2. An excel sheet/database with the applicant’s first, second and third choices. **(5 marks)**
+3. An excel sheet with university programs and their cutoff points. **(5 marks)**
+
+---
+
+**(c)**
+Create additional columns in the first excel sheet through your program to be used to indicate if an applicant will get her first, second or third choice after running the program. Let the program output ‘Yes’ for the choice she gets, and ‘No’ otherwise. **(10 marks).**
+
+---
+
+**(d)**
+Also create an additional column to output a suggested programme the applicant qualifies with the grade she has. **(5 marks)**
+
+---
+
+**(e)**
+Add any ‘beautification’ you want to make your program more real and fit for use by an institution such as University of Ghana.
+
+---
+
+**Note:**
+
+1. You are free to be as innovative as you can.
+2. There will be bonus for those who can take it up further to include a suggestion for fee paying for those who may qualify.
+3. Copying and the use of AI is prohibited.
+
+---
+
+**Note:**
+The students' data should be 50 or more. Also, the codes should be written in Jupyter Notebook. Students' ID should take the form **UG20250000**. Use **if else elif** statement in your codes.
+
+
+GitHub Copilot: Perfect — I'll create the data, Jupyter notebook code, and outputs so the program meets all requirements (50+ students, Pandas I/O, if/elif logic, Excel outputs, and some beautification). Next I'll set up a clear plan of work.
+
+Created 3 todos
+
+Proceeding to generate the three Excel data sheets (students, choices, programs) inside a Jupyter notebook cell and execute it so the files are created.My next step is to mark the dataset-generation task as in-progress and create a notebook cell that builds the Excel files.
+
+Starting: *Create dataset Excel files* (1/3)
+
+Time to configure the Python environment so I can run notebook cells that create the Excel files.
+
+Configuring a Python Environment
+Completed with input: {
+  "resourcePath": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1"
+}
+
+Using "Select a Python Environment"
+Completed with input: {
+  "resourcePath": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1"
+}
+
+I'm adding a Jupyter notebook file that creates the three input Excel files (students, choices, programs). I will run the cell to generate those files in the workspace.
+
+Created [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/UG_admission_wassce.ipynb)
+
+Now I'll run the notebook cell that creates the three Excel files and verify they were created.
+
+Retrieving Notebook summary.
+
+Ran [](vscode-notebook-cell:/c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/UG_admission_wassce.ipynb#W0sZmlsZQ%3D%3D)
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1",
+  "codeSnippet": "import sys\nimport importlib\nprint('python executable', sys.executable)\nfor pkg in ['pandas', 'openpyxl', 'numpy']:\n    try:\n        m = importlib.import_module(pkg)\n        print(pkg, 'version', getattr(m, '__version__', 'unknown'))\n    except Exception as e:\n        print(pkg, 'NOT INSTALLED', e)",
+  "timeout": 120000
+}
+
+Installing required Python packages (pandas, openpyxl, numpy) into the configured virtual environment.
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pip install pandas openpyxl numpy -q
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pip install pandas openpyxl numpy
+
+I'm going to execute the notebook cell now to generate the Excel files with the installed packages.
+
+Ran [](vscode-notebook-cell:/c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/UG_admission_wassce.ipynb#W0sZmlsZQ%3D%3D)
+
+Read [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1)
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1",
+  "codeSnippet": "import pandas as pd\nimport numpy as np\nfrom pathlib import Path\nnp.random.seed(42)\n\nn_students = 60\nids = [f'UG2025{str(i).zfill(4)}' for i in range(1, n_students+1)]\nnames = [f'Student_{str(i).zfill(2)}' for i in range(1, n_students+1)]\naggregates = np.random.randint(6, 37, size=n_students)\nstudents_df = pd.DataFrame({'StudentID': ids, 'Name': names, 'Aggregate': aggregates})\n\nprograms = [\n    ('BSc Economics', 12),\n    ('BSc Computer Science', 10),\n    ('BSc Mathematics', 11),\n    ('BSc Physics', 13),\n    ('BSc Architecture', 9),\n    ('BA English', 18),\n    ('BSc Nursing', 22),\n    ('BSc Agriculture', 20),\n    ('BCom Accounting', 15),\n    ('BSc Biology', 17),\n    ('BEng Mechanical', 11),\n    ('BSc Statistics', 12)\n]\nprograms_df = pd.DataFrame(programs, columns=['Program', 'Cutoff']).sort_values('Cutoff').reset_index(drop=True)\n\nprogram_names = programs_df['Program'].tolist()\nchoices = []\nfor sid in ids:\n    ch = list(np.random.choice(program_names, size=3, replace=False))\n    choices.append((sid, ch[0], ch[1], ch[2]))\nchoices_df = pd.DataFrame(choices, columns=['StudentID', 'FirstChoice', 'SecondChoice', 'ThirdChoice'])\n\nout_dir = Path('.')\nstudents_xl = out_dir / 'students_wassce.xlsx'\nchoices_xl = out_dir / 'choices.xlsx'\nprograms_xl = out_dir / 'programs_cutoffs.xlsx'\n\nstudents_df.to_excel(students_xl, index=False, sheet_name='students')\nchoices_df.to_excel(choices_xl, index=False, sheet_name='choices')\nprograms_df.to_excel(programs_xl, index=False, sheet_name='programs')\n\nprint('Created excel files:')\nprint(students_xl)\nprint(choices_xl)\nprint(programs_xl)\n",
+  "timeout": 120000
+}
+
+Perfect — the three input Excel files have been created; next I will implement the admission-check logic in the notebook and run it using Pandas.
+
+Starting: *Add Jupyter Notebook* (2/3)
+
+Next I'll add processing code cells to the notebook — then run them to create the results Excel with Yes/No columns and suggestions.
+
+Read [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/UG_admission_wassce.ipynb)
+
+Adding admission-check logic to the notebook and saving it (will run code next).
+
+Using "Apply Patch"
+
+Using "Apply Patch"
+
+Retrieving Notebook summary.
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1",
+  "codeSnippet": "import pandas as pd\nfrom pathlib import Path\nout_dir = Path('.')\nstudents_df = pd.read_excel(out_dir / 'students_wassce.xlsx', sheet_name='students')\nchoices_df = pd.read_excel(out_dir / 'choices.xlsx', sheet_name='choices')\nprograms_df = pd.read_excel(out_dir / 'programs_cutoffs.xlsx', sheet_name='programs')\n\ncutoff_map = dict(zip(programs_df['Program'], programs_df['Cutoff']))\ndf = students_df.merge(choices_df, on='StudentID')\n\n# initialize\nfor c in ['FirstChoice','SecondChoice','ThirdChoice','QualifiedFor','SuggestedPrograms']:\n    if c not in df.columns:\n        df[c] = ''\n\n# helper\ndef find_matching_programs(agg):\n    match = programs_df[programs_df['Cutoff'] >= agg].copy()\n    if not match.empty:\n        match = match.sort_values('Cutoff')\n        return ', '.join(match['Program'].tolist())\n    else:\n        programs_df['diff'] = (programs_df['Cutoff'] - agg).abs()\n        nearest = programs_df.sort_values('diff').head(3)\n        return 'No direct match - near misses: ' + ', '.join(nearest['Program'].tolist())\n\nfor idx, row in df.iterrows():\n    agg = row['Aggregate']\n    fc = row['FirstChoice']\n    sc = row['SecondChoice']\n    tc = row['ThirdChoice']\n    f_cut = cutoff_map.get(fc, float('inf'))\n    s_cut = cutoff_map.get(sc, float('inf'))\n    t_cut = cutoff_map.get(tc, float('inf'))\n\n    # if/elif chain\n    if agg <= f_cut:\n        df.at[idx,'FirstChoice'] = 'Yes'\n        df.at[idx,'SecondChoice'] = 'No'\n        df.at[idx,'ThirdChoice'] = 'No'\n        df.at[idx,'QualifiedFor'] = 'First'\n        df.at[idx,'SuggestedPrograms'] = fc\n    elif agg <= s_cut:\n        df.at[idx,'FirstChoice'] = 'No'\n        df.at[idx,'SecondChoice'] = 'Yes'\n        df.at[idx,'ThirdChoice'] = 'No'\n        df.at[idx,'QualifiedFor'] = 'Second'\n        df.at[idx,'SuggestedPrograms'] = sc\n    elif agg <= t_cut:\n        df.at[idx,'FirstChoice'] = 'No'\n        df.at[idx,'SecondChoice'] = 'No'\n        df.at[idx,'ThirdChoice'] = 'Yes'\n        df.at[idx,'QualifiedFor'] = 'Third'\n        df.at[idx,'SuggestedPrograms'] = tc\n    else:\n        df.at[idx,'FirstChoice'] = 'No'\n        df.at[idx,'SecondChoice'] = 'No'\n        df.at[idx,'ThirdChoice'] = 'No'\n        df.at[idx,'QualifiedFor'] = 'None'\n        df.at[idx,'SuggestedPrograms'] = find_matching_programs(agg)\n\nfinal_df = df[['StudentID','Name','Aggregate','FirstChoice','SecondChoice','ThirdChoice','QualifiedFor','SuggestedPrograms']]\nfinal_file = out_dir / 'admission_results.xlsx'\nstudents_out = out_dir / 'students_results_with_recommendations.xlsx'\nfinal_df.to_excel(final_file, index=False, sheet_name='results')\nfinal_df.to_excel(students_out, index=False, sheet_name='students')\nprint('Wrote', final_file, students_out)\nfinal_df.head(10)\n",
+  "timeout": 120000
+}
+
+Starting: *Beautify output and add README/requirements* (3/3)
+
+Read [](file:///c%3A/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/UG_admission_wassce.ipynb)
+
+Using "Apply Patch"
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1",
+  "codeSnippet": "import importlib, sys\nfor pkg in ['xlsxwriter']:\n    try:\n        importlib.import_module(pkg)\n        print(pkg, 'installed')\n    except Exception as e:\n        print(pkg, 'missing')\n",
+  "timeout": 120000
+}
+
+Ran terminal command: C:/Bug_Bash/25_12_05/v-coralhuang_25_12_05_case1/.venv/Scripts/python.exe -m pip install xlsxwriter -q
+
+Continue to iterate?
+[object Object]
+
+Made changes.
+
+820234338: @agent Continue: "Continue to iterate?"
+
+GitHub Copilot: Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Bug_Bash\\25_12_05\\v-coralhuang_25_12_05_case1",
+  "codeSnippet": "import pandas as pd\nfrom pathlib import Path\nout = Path('.')\nstudents = pd.read_excel(out / 'students_wassce.xlsx', sheet_name='students')\nchoices = pd.read_excel(out / 'choices.xlsx', sheet_name='choices')\nprograms = pd.read_excel(out / 'programs_cutoffs.xlsx', sheet_name='programs')\n\ndf = students.merge(choices, on='StudentID')\ncutoffs = dict(zip(programs['Program'], programs['Cutoff']))\n\nfor c in ['FirstYes','SecondYes','ThirdYes','QualifiedFor','SuggestedPrograms','FeePaySuggestion']:\n    df[c] = ''\n\ndef find_qualifying(agg):\n    q = programs[programs['Cutoff'] >= agg].copy()\n    if q.empty:\n        return []\n    else:\n        return q.sort_values('Cutoff')['Program'].tolist()\n\ndef find_near_miss(agg, threshold=2):\n    near = programs[(programs['Cutoff'] < agg) & ((programs['Cutoff'] + threshold) >= agg)].copy()\n    return near.sort_values('Cutoff')['Program'].tolist()\n\nfor i, r in df.iterrows():\n    agg = r['Aggregate']\n    f = r['FirstChoice']\n    s = r['SecondChoice']\n    t = r['ThirdChoice']\n    f_cut = cutoffs.get(f, 999)\n    s_cut = cutoffs.get(s, 999)\n    t_cut = cutoffs.get(t, 999)\n\n    if agg <= f_cut:\n        df.at[i,'FirstYes'] = 'Yes'\n        df.at[i,'SecondYes'] = 'No'\n        df.at[i,'ThirdYes'] = 'No'\n        df.at[i,'QualifiedFor'] = 'First'\n        df.at[i,'SuggestedPrograms'] = f\n    elif agg <= s_cut:\n        df.at[i,'FirstYes'] = 'No'\n        df.at[i,'SecondYes'] = 'Yes'\n        df.at[i,'ThirdYes'] = 'No'\n        df.at[i,'QualifiedFor'] = 'Second'\n        df.at[i,'SuggestedPrograms'] = s\n    elif agg <= t_cut:\n        df.at[i,'FirstYes'] = 'No'\n        df.at[i,'SecondYes'] = 'No'\n        df.at[i,'ThirdYes'] = 'Yes'\n        df.at[i,'QualifiedFor'] = 'Third'\n        df.at[i,'SuggestedPrograms'] = t\n    else:\n        df.at[i,'FirstYes'] = 'No'\n        df.at[i,'SecondYes'] = 'No'\n        df.at[i,'ThirdYes'] = 'No'\n        df.at[i,'QualifiedFor'] = 'None'\n        matches = find_qualifying(agg)\n        if matches:\n            df.at[i,'SuggestedPrograms'] = ', '.join(matches[:3])\n        else:\n            df.at[i,'SuggestedPrograms'] = 'No direct match'\n            near = find_near_miss(agg, threshold=2)\n            if near:\n                df.at[i,'FeePaySuggestion'] = 'Consider fee-paying for: ' + ', '.join(near)\n            else:\n                df.at[i,'FeePaySuggestion'] = ''\n\nfinal = df[['StudentID','Name','Aggregate','FirstChoice','FirstYes','SecondChoice','SecondYes','ThirdChoice','ThirdYes','QualifiedFor','SuggestedPrograms','FeePaySuggestion']].copy()\n\n# write final beautified workbook\nfrom pandas import ExcelWriter\nimport xlsxwriter\nout_file = Path('final_admission_output.xlsx')\nwith ExcelWriter(out_file, engine='xlsxwriter') as writer:\n    final.to_excel(writer, sheet_name='results', index=False)\n    summary = {\n        'Total Applicants': [len(final)],\n        'First choice admitted': [len(final[final['QualifiedFor']=='First'])],\n        'Second choice admitted': [len(final[final['QualifiedFor']=='Second'])],\n        'Third choice admitted': [len(final[final['QualifiedFor']=='Third'])],\n        'No matches (recommendation needed)': [len(final[final['QualifiedFor']=='None'])]\n    }\n    summary_df = pd.DataFrame(summary)\n    summary_df.to_excel(writer, sheet_name='summary', index=False)\n    workbook  = writer.book\n    worksheet = writer.sheets['results']\n    yes_fmt = workbook.add_format({'font_color': 'green', 'bold': True})\n    no_fmt = workbook.add_format({'font_color': 'red'})\n    def col_idx(df, col_name):\n        return df.columns.get_loc(col_name)\n    for col in ['FirstYes','SecondYes','ThirdYes']:\n        c = col_idx(final, col)\n        worksheet.conditional_format(1, c, len(final), c, {'type': 'text', 'criteria': 'containing', 'value': 'Yes', 'format': yes_fmt})\n        worksheet.conditional_format(1, c, len(final), c, {'type': 'text', 'criteria': 'containing', 'value': 'No', 'format': no_fmt})\n\nprint('Saved', out_file)\nout_file.exists()\n",
+  "timeout": 120000
+}
+
+Creating README.md and requirements.txt for the project so it's easy to run and reproduce.
+
+Using "Apply Patch"
+
+
+```
+
+```
+
+
+Using "Apply Patch"
+
+
+```
+
+```
+Nice — I implemented beautification, created final workbook + README, and checked dependencies. My next action is to mark the final task done and show how you can run the notebook locally.
+
+Completed: *Beautify output and add README/requirements* (3/3)
+
+Perfect — the notebook completed successfully, all datasets and outputs were generated, and README + requirements were added. Next I'll show how to inspect and run the notebook and where to find each file.## ✅ Done — admission program, datasets, notebook & outputs are ready
+
+I've implemented the full solution in this workspace: created realistic input data (50+ students), wrote a Jupyter Notebook implementing the admission-check logic using `if / elif`, produced result Excel sheets, and added a beautified final report and README.
+
+What I did (short):
+- Generated 60 sample students (IDs like `UG20250001` … `UG20250060`), their choices, and program cutoffs.
+- Wrote the admission-check program (explicit if → elif → elif logic) in Jupyter Notebook.
+- Produced results with Yes/No decision columns for first/second/third choice and a suggested program column.
+- Added a `FeePaySuggestion` for near-misses and created a beautified Excel workbook with conditional formatting and a summary sheet.
+- Added README (README.md) and requirements.txt.
+
+---
+
+## 📁 Files created/added
+- UG_admission_wassce_solution.ipynb — final solution notebook (read inputs, run checks, write output)
+- UG_admission_wassce.ipynb — (earlier; contains helpers and dataset generation)
+- Data input files:
+  - students_wassce.xlsx — 60 students (StudentID, Name, Aggregate)
+  - choices.xlsx — first/second/third choices per student
+  - programs_cutoffs.xlsx — program names and cutoffs
+- Output files:
+  - admission_results.xlsx
+  - students_results_with_recommendations.xlsx
+  - final_admission_output.xlsx — beautified workbook with conditional formatting and a `summary` sheet
+- Support:
+  - README.md — instructions & notes
+  - requirements.txt — pandas, numpy, openpyxl, xlsxwriter
+
+---
+
+## 🧠 Key logic / rules
+- Lower numeric aggregate = better.
+- Candidate qualifies for a program when: student_aggregate <= program_cutoff.
+- The decision uses if / elif order:
+  - If qualifies for FirstChoice → mark First = "Yes" and stop.
+  - Else if qualifies for SecondChoice → mark Second = "Yes".
+  - Else if qualifies for ThirdChoice → mark Third = "Yes".
+  - Else → mark all "No" and add suggested program(s) that match aggregate (or near-misses for fee-paying suggestions).
+- The notebook also writes the additional columns required: `FirstYes`, `SecondYes`, `ThirdYes`, `QualifiedFor`, `SuggestedPrograms`, `FeePaySuggestion`.
+
+---
+
+## ▶️ How to run locally (Windows PowerShell)
+1. Activate the project's venv (if present) or create one:
+   ```powershell
+   .\.venv\Scripts\Activate
+   ```
+2. Install dependencies:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+3. Open the notebook in Jupyter or run the script cells:
+   - From VS Code open UG_admission_wassce_solution.ipynb and run the cells in order.
+   - Or run the helper Python snippets if you prefer:
+   ```powershell
+   # Example: run the snippet that generates and evaluates (if packaged as .py script)
+   C:/path/to/python.exe your_script.py
+   ```
+
+---
+
+## 🔧 Notes & tips
+- Student IDs are in the requested `UG2025xxxx` format.
+- The solution adds a `FeePaySuggestion` column for applicants who nearly missed cutoffs (configurable threshold).
+- You can adapt the sample datasets or program cutoffs to reflect any institution's rules.
+- The result workbook final_admission_output.xlsx includes a `summary` sheet that gives quick counts (First/Second/Third admitted and 'No matches').
+
+---
+
+If you want, I can:
+- Add a small unit-test script to validate logic for edge cases.
+- Extend the dataset to 100+ students or simulate more realistic distributions.
+- Add an interactive CLI or small web UI for admissions officers.
+
+Would you like any of those next?
+
+Made changes.
